@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///Users/jiyoonlee/Downloads/index_2.html -->
+<!-- saved from url=(0046)file:///Users/jiyoonlee/Downloads/index_3.html -->
 <html lang="ko">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 
 
   <meta name="viewport" content="width=1280">
@@ -2576,19 +2577,22 @@
         const idx = me.marks.indexOf(m);
         const nm = { block: '불가능', pref: '선호', avoid: '비선호' }[m.type];
         return `<div class="mk ${m.type}" style="${posStyle(m.h, m.span)}" onclick="editMark(event,${idx})">${nm}</div>`;
-      }).join('') + (S.pending && S.pending.c === c ? `<div class="mk temp" style="${posStyle(S.pending.h, S.pending.span)}">${tt(S.pending.h)} – ${tt(S.pending.h + S.pending.span)}</div>` : '')
-        + (S.drag && S.drag.c === c ? `<div class="mk temp" style="${posStyle(Math.min(S.drag.h0, S.drag.h1), Math.abs(S.drag.h1 - S.drag.h0) + 1)}"></div>` : '');
-      const hint = !me.marks.length && !S.pending ? `<div class="grid-hint"><b>불가능한 시간을 드래그로 칠해주세요</b><span>드래그 후 불가능 · 선호 · 비선호를 선택할 수 있어요</span></div>` : '';
+      }).join('') + (S.pending && c >= S.pending.c0 && c <= S.pending.c1 ? `<div class="mk temp" style="${posStyle(S.pending.h, S.pending.span)}">${c === S.pending.c0 ? `${tt(S.pending.h)} – ${tt(S.pending.h + S.pending.span)}` : ''}</div>` : '')
+        + (S.drag && c >= Math.min(S.drag.c0, S.drag.c1) && c <= Math.max(S.drag.c0, S.drag.c1) ? `<div class="mk temp" style="${posStyle(Math.min(S.drag.h0, S.drag.h1), Math.abs(S.drag.h1 - S.drag.h0) + 1)}"></div>` : '');
+      const hint = !me.marks.length && !S.pending ? `<div class="grid-hint"><b>불가능한 시간을 드래그로 칠해주세요</b><span>위아래는 물론 좌우로도 드래그해 여러 날을 한 번에 선택할 수 있어요</span></div>` : '';
       return gridShell(inner, hint)
         + (S.pending ? tplMarkPanel() : '')
         + `<button class="submit-fab" onclick="submitInput()">${me.responded ? '수정 완료' : '제출하기'}</button>`;
     }
     function tplMarkPanel() {
       const p = S.pending;
+      const dayTxt = p.c0 === p.c1
+        ? dayStr({ c: p.c0 })
+        : `7월 ${DAYS[p.c0][1]}일 (${DAYS[p.c0][0]}) – 7월 ${DAYS[p.c1][1]}일 (${DAYS[p.c1][0]})`;
       return `<div class="pop mkpanel" style="left:${p.x}px; top:${p.y}px;">
   <button class="close" onclick="S.pending=null;render()">×</button>
-  <h4>${dayStr({ c: p.c })}</h4>
-  <div class="time">${tt(p.h)} ~ ${tt(p.h + p.span)}</div><hr>
+  <h4>${dayTxt}</h4>
+  <div class="time">${tt(p.h)} ~ ${tt(p.h + p.span)}${p.c0 !== p.c1 ? ` · ${p.c1 - p.c0 + 1}일` : ''}</div><hr>
   <label><input type="radio" name="mt" value="block" ${p.type === 'block' ? 'checked' : ''} onchange="S.pending.type='block'"><span class="sw b"></span>불가능</label>
   <label><input type="radio" name="mt" value="pref" ${p.type === 'pref' ? 'checked' : ''} onchange="S.pending.type='pref'"><span class="sw p"></span>선호</label>
   <label><input type="radio" name="mt" value="avoid" ${p.type === 'avoid' ? 'checked' : ''} onchange="S.pending.type='avoid'"><span class="sw a"></span>비선호</label>
@@ -2636,7 +2640,7 @@
       const me = persona(); const m = me.marks[idx];
       const r = e.currentTarget.getBoundingClientRect();
       S.pending = {
-        c: m.c, h: m.h, span: m.span, type: m.type, reason: m.reason || '', editIdx: idx,
+        c0: m.c, c1: m.c, h: m.h, span: m.span, type: m.type, reason: m.reason || '', editIdx: idx,
         x: panelX(r), y: r.top + window.scrollY - 4
       };
       render();
@@ -2648,8 +2652,9 @@
     }
     function saveMark() {
       const me = persona(); const p = S.pending;
-      const mark = { type: p.type, c: p.c, h: p.h, span: p.span, reason: (p.reason || '').trim() || undefined };
-      if (p.editIdx != null) me.marks[p.editIdx] = mark; else me.marks.push(mark);
+      const base = { type: p.type, h: p.h, span: p.span, reason: (p.reason || '').trim() || undefined };
+      if (p.editIdx != null) me.marks[p.editIdx] = { ...base, c: p.c0 };
+      else for (let c = p.c0; c <= p.c1; c++) me.marks.push({ ...base, c });
       S.pending = null; render();
     }
     function deleteMark() {
@@ -2657,40 +2662,46 @@
       me.marks.splice(S.pending.editIdx, 1);
       S.pending = null; render();
     }
-    /* drag painting */
+    /* drag painting — 세로(시간)·가로(날짜) 2차원 선택 */
     function bindGrid() {
       if (S.view !== 'input') return;
-      const cols = document.getElementById('cols'); if (!cols) return;
+      const colsEl = document.getElementById('cols'); if (!colsEl) return;
       const HH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hh'));
-      const hourAt = (col, ev) => {
-        const r = col.getBoundingClientRect();
-        return Math.max(H0, Math.min(H1 - 1, Math.floor((ev.clientY - r.top) / HH) + H0));
+      const pos = ev => {
+        const el = document.getElementById('cols'); if (!el) return null;
+        const r = el.getBoundingClientRect();
+        const n = D1 - D0 + 1, cw = r.width / n;
+        const c = Math.max(D0, Math.min(D1, D0 + Math.floor((ev.clientX - r.left) / cw)));
+        const hh = Math.max(H0, Math.min(H1 - 1, Math.floor((ev.clientY - r.top) / HH) + H0));
+        return { c, h: hh };
       };
-      cols.querySelectorAll('.col').forEach(col => {
-        col.addEventListener('pointerdown', ev => {
-          if (ev.target.closest('.mk') && !ev.target.classList.contains('temp')) return;
-          if (S.pending) return;
-          const c = +col.dataset.c, h = hourAt(col, ev);
-          S.drag = { c, h0: h, h1: h }; col.setPointerCapture(ev.pointerId); render(); rebindMove(c);
-        });
-      });
-      function rebindMove(c) {
-        const col = document.querySelector(`.col[data-c="${c}"]`); if (!col) return;
-        const mv = ev => { const h = hourAt(col, ev); if (S.drag && h !== S.drag.h1) { S.drag.h1 = h; render(); rebindMove(c); } };
-        const up = ev => {
+      colsEl.addEventListener('pointerdown', ev => {
+        if (ev.target.closest('.mk') && !ev.target.classList.contains('temp')) return;
+        if (S.pending) return;
+        const p0 = pos(ev); if (!p0) return;
+        ev.preventDefault();
+        S.drag = { c0: p0.c, c1: p0.c, h0: p0.h, h1: p0.h };
+        const mv = e2 => {
+          const q = pos(e2); if (!q || !S.drag) return;
+          if (q.c !== S.drag.c1 || q.h !== S.drag.h1) { S.drag.c1 = q.c; S.drag.h1 = q.h; render(); }
+        };
+        const up = () => {
           window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up);
           if (!S.drag) return;
-          const h = Math.min(S.drag.h0, S.drag.h1), span = Math.abs(S.drag.h1 - S.drag.h0) + 1;
-          const fake = document.querySelector(`.col[data-c="${c}"]`).getBoundingClientRect();
-          const y = fake.top + window.scrollY + (h - H0) * 96;
+          const cA = Math.min(S.drag.c0, S.drag.c1), cB = Math.max(S.drag.c0, S.drag.c1);
+          const hA = Math.min(S.drag.h0, S.drag.h1), span = Math.abs(S.drag.h1 - S.drag.h0) + 1;
+          const colEl = document.querySelector(`.col[data-c="${cB}"]`);
+          const fr = colEl ? colEl.getBoundingClientRect() : colsEl.getBoundingClientRect();
+          const y = fr.top + window.scrollY + (hA - H0) * HH;
           S.pending = {
-            c, h, span, type: 'block', reason: '', editIdx: null,
-            x: panelX({ right: fake.right, left: fake.left }), y: Math.min(y, document.body.scrollHeight - 480)
+            c0: cA, c1: cB, h: hA, span, type: 'block', reason: '', editIdx: null,
+            x: panelX({ right: fr.right, left: fr.left }), y: Math.min(y, document.body.scrollHeight - 480)
           };
           S.drag = null; render();
         };
         window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
-      }
+        render();
+      });
     }
     /* toast */
     let toastTimer;
@@ -2701,6 +2712,8 @@
     }
     render();
   </script>
+
+
 
 
 
