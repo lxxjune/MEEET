@@ -2683,7 +2683,7 @@
    <div class="chip gray">7월 ${DAYS[s.c][1]}일 (${DAYS[s.c][0]}) ${tt(s.h)} – ${tt(s.h + (s.dur || 1))}</div>
    ${S.role === 'host' ? `<button class="cancel-link" onclick="S.confirmed=null;render()">확정 취소</button>` : ''}`;
       } else {
-        chips = S.view === 'input' ? '' : `<div class="chip blue">${P.length}명 중 ${done}명 완료</div>`;
+        chips = S.view === 'input' ? '' : `<div class="chip blue">${P.length}명 중 ${done}명 입력 완료</div>`;
         if (S.view === 'input' && me)
           cta = `<button class="btn-cta solid" onclick="submitInput()">${me.responded ? '수정 완료' : '제출하기'}</button>`;
         else if (me)
