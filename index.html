@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///Users/jiyoonlee/Downloads/index_4.html -->
-<html lang="ko">
-
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- saved from url=(0046)file:///Users/jiyoonlee/Downloads/index_6.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
 
 
 
   <meta name="viewport" content="width=1280">
   <title>MEEET! – 회의 시간 조율 프로토타입</title>
-  <link rel="stylesheet"
-    href="file:///Users/jiyoonlee/Downloads/MEEET!%20%E2%80%93%20%E1%84%92%E1%85%AC%E1%84%8B%E1%85%B4%20%E1%84%89%E1%85%B5%E1%84%80%E1%85%A1%E1%86%AB%20%E1%84%8C%E1%85%A9%E1%84%8B%E1%85%B2%E1%86%AF%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%90%E1%85%A9%E1%84%90%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8_files/pretendard.min.css">
+  <link rel="stylesheet" href="file:///Users/jiyoonlee/Downloads/MEEET!%20%E2%80%93%20%E1%84%92%E1%85%AC%E1%84%8B%E1%85%B4%20%E1%84%89%E1%85%B5%E1%84%80%E1%85%A1%E1%86%AB%20%E1%84%8C%E1%85%A9%E1%84%8B%E1%85%B2%E1%86%AF%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%90%E1%85%A9%E1%84%90%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8_files/pretendard.min.css">
   <style>
     :root {
       --p: #217CF9;
@@ -1598,6 +1595,118 @@
       top: 28px;
     }
 
+    .invite {
+      position: fixed;
+      inset: 0;
+      background: #F3F5F8;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    .invite .logo {
+      position: absolute;
+      left: 40px;
+      top: 28px;
+    }
+    .inv-wrap {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 0;
+    }
+    .inv-card {
+      width: 480px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, .08);
+      padding: 40px 44px 32px;
+    }
+    .inv-eyebrow {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--p);
+    }
+    .inv-title {
+      font-size: 26px;
+      font-weight: 700;
+      margin: 10px 0 8px;
+    }
+    .inv-sub {
+      font-size: 14px;
+      color: var(--sub);
+      margin-bottom: 22px;
+    }
+    .inv-box {
+      background: var(--line2);
+      border-radius: 12px;
+      padding: 6px 16px;
+      margin-bottom: 26px;
+    }
+    .inv-box div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      font-size: 13px;
+    }
+    .inv-box span {
+      color: var(--sub);
+    }
+    .inv-box b {
+      font-weight: 500;
+      color: var(--txt);
+    }
+    .inv-label {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .inv-input {
+      display: block;
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      margin-bottom: 12px;
+    }
+    .inv-input:focus {
+      outline: none;
+      border-color: var(--p);
+    }
+    .inv-login {
+      width: 100%;
+      background: var(--p);
+      color: #fff;
+      border-radius: 24px;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+    .inv-guestlink {
+      display: block;
+      width: 100%;
+      text-align: center;
+      color: var(--p);
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 18px;
+      padding: 6px;
+    }
+    .inv-hint {
+      font-size: 12px;
+      color: var(--faint);
+      margin: -4px 0 12px 2px;
+    }
+    .inv-caption {
+      font-size: 12px;
+      color: var(--faint);
+      margin-top: 22px;
+      text-align: center;
+    }
     .start-card {
       background: #fff;
       border-radius: 20px;
@@ -1714,17 +1823,50 @@
         <div class="ravt">이</div>
         <div><b>주최자(이지윤)</b><span>회의 후보를 확인하고 회의 시간을 확정해요</span></div>
       </button>
-      <button onclick="setRole(&#39;guest&#39;)">
+      <button onclick="showInvite()">
         <div class="ravt">최</div>
-        <div><b>참석자(최유진)</b><span>가능한 시간을 드래그로 입력해요</span></div>
+        <div><b>참석자(최유진)</b><span>초대 링크로 들어와 가능한 시간을 입력해요</span></div>
       </button>
       <div class="start-note">입력한 내용은 새로고침 시 초기화돼요</div>
     </div>
   </div>
 
+  <!-- 참석자 초대 랜딩 (이메일/링크 유입 가정) -->
+  <div class="invite hide" id="invite">
+    <div class="logo">MEEET!</div>
+    <div class="inv-wrap">
+      <div class="inv-card">
+        <div class="inv-eyebrow">회의 초대</div>
+        <h1 class="inv-title">기획회의</h1>
+        <div class="inv-sub">이지윤 님이 회의에 초대했어요</div>
+        <div class="inv-box">
+          <div><span>기간</span><b>2026. 7. 4 – 7. 10</b></div>
+          <div><span>회의 시간</span><b>1시간</b></div>
+          <div><span>시간대</span><b>09:00 ~ 17:00</b></div>
+          <div><span>인원</span><b>6명</b></div>
+        </div>
+        <div id="inv-login-sec">
+          <div class="inv-label">로그인하고 시간을 입력해주세요</div>
+          <input class="inv-input" id="inv-email" type="text" placeholder="이메일" onkeydown="if(event.key===&#39;Enter&#39;)inviteLogin()">
+          <input class="inv-input" id="inv-pw" type="password" placeholder="비밀번호" onkeydown="if(event.key===&#39;Enter&#39;)inviteLogin()">
+          <button class="inv-login" onclick="inviteLogin()">로그인</button>
+          <button class="inv-guestlink" onclick="showInviteGuest()">비회원으로 참여하기</button>
+        </div>
+        <div id="inv-guest-sec" class="hide">
+          <div class="inv-label">이름을 입력하고 바로 참여해보세요</div>
+          <input class="inv-input" id="inv-name" type="text" placeholder="이름" maxlength="10" onkeydown="if(event.key===&#39;Enter&#39;)guestJoin()">
+          <input class="inv-input" id="inv-gpw" type="password" placeholder="비밀번호" onkeydown="if(event.key===&#39;Enter&#39;)guestJoin()">
+          <div class="inv-hint">비밀번호는 나중에 입력한 시간을 수정할 때 사용해요</div>
+          <button class="inv-login" onclick="guestJoin()">참여하기</button>
+          <button class="inv-guestlink" onclick="showInviteLogin()">로그인으로 돌아가기</button>
+        </div>
+      </div>
+      <div class="inv-caption">이미 로그인되어 있다면 바로 회의 화면으로 이동해요</div>
+    </div>
+  </div>
+
   <header>
-    <button class="burger" aria-label="사이드바 열기/닫기"
-      onclick="S.sidebarClosed=!S.sidebarClosed;render()"><span></span><span></span><span></span></button>
+    <button class="burger" aria-label="사이드바 열기/닫기" onclick="S.sidebarClosed=!S.sidebarClosed;render()"><span></span><span></span><span></span></button>
     <div class="logo">MEEET!</div>
     <div class="hd-right">
       <button class="btn-primary" onclick="clickNewMeet()">+ 새 회의 만들기</button>
@@ -1736,193 +1878,92 @@
     <aside id="sidebar">
       <div class="side-label">미팅 <span class="plus">＋</span></div>
       <div id="meet-list">
-        <div class="meet-item on">
-          <button class="meet-main" onclick="selectMeet(&#39;plan&#39;)"><span class="dot"></span>기획회의</button>
-
-        </div>
-        <div class="meet-item ">
-          <button class="meet-main" onclick="selectMeet(&#39;qa&#39;)"><span class="dot"></span>QA 회의</button>
-
-        </div>
-      </div>
+  <div class="meet-item on">
+   <button class="meet-main" onclick="selectMeet(&#39;plan&#39;)"><span class="dot"></span>기획회의</button>
+   
+  </div>
+  <div class="meet-item ">
+   <button class="meet-main" onclick="selectMeet(&#39;qa&#39;)"><span class="dot"></span>QA 회의</button>
+   
+  </div></div>
       <div class="side-label" style="margin-top:20px">참석자 <span class="plus">＋</span></div>
       <div id="att-list">
-        <div class="att-row ">
-          <input type="checkbox" checked="" onchange="toggleAtt(&#39;jy&#39;)">
-          <div class="avt">이</div>
-          <div class="nm">이지윤</div>
-          <div class="badge req">필수</div>
-        </div>
-        <div class="att-row ">
-          <input type="checkbox" checked="" onchange="toggleAtt(&#39;hn&#39;)">
-          <div class="avt">박</div>
-          <div class="nm">박하늘</div>
-          <div class="badge req">필수</div>
-        </div>
-        <div class="att-row ">
-          <input type="checkbox" checked="" onchange="toggleAtt(&#39;dh&#39;)">
-          <div class="avt">이</div>
-          <div class="nm">이도현</div>
-          <div class="badge req">필수</div>
-        </div>
-        <div class="att-row norsp">
-          <input type="checkbox" checked="" onchange="toggleAtt(&#39;ma&#39;)">
-          <div class="avt">정</div>
-          <div class="nm">정민아</div>
-          <div class="badge req">필수</div>
-        </div>
-        <div class="att-row norsp">
-          <input type="checkbox" checked="" onchange="toggleAtt(&#39;yj&#39;)">
-          <div class="avt">최</div>
-          <div class="nm">최유진</div>
-          <div class="badge ">선택</div>
-        </div>
-        <div class="att-row ">
-          <input type="checkbox" checked="" onchange="toggleAtt(&#39;jw&#39;)">
-          <div class="avt">한</div>
-          <div class="nm">한지우</div>
-          <div class="badge ">선택</div>
-        </div>
-      </div>
+  <div class="att-row ">
+   <input type="checkbox" checked="" onchange="toggleAtt(&#39;jy&#39;)">
+   <div class="avt">이</div><div class="nm">이지윤</div>
+   <div class="badge req">필수</div>
+  </div>
+  <div class="att-row ">
+   <input type="checkbox" checked="" onchange="toggleAtt(&#39;hn&#39;)">
+   <div class="avt">박</div><div class="nm">박하늘</div>
+   <div class="badge req">필수</div>
+  </div>
+  <div class="att-row ">
+   <input type="checkbox" checked="" onchange="toggleAtt(&#39;dh&#39;)">
+   <div class="avt">이</div><div class="nm">이도현</div>
+   <div class="badge req">필수</div>
+  </div>
+  <div class="att-row norsp">
+   <input type="checkbox" checked="" onchange="toggleAtt(&#39;ma&#39;)">
+   <div class="avt">정</div><div class="nm">정민아</div>
+   <div class="badge req">필수</div>
+  </div>
+  <div class="att-row norsp">
+   <input type="checkbox" checked="" onchange="toggleAtt(&#39;yj&#39;)">
+   <div class="avt">최</div><div class="nm">최유진</div>
+   <div class="badge ">선택</div>
+  </div>
+  <div class="att-row ">
+   <input type="checkbox" checked="" onchange="toggleAtt(&#39;jw&#39;)">
+   <div class="avt">한</div><div class="nm">한지우</div>
+   <div class="badge ">선택</div>
+  </div></div>
     </aside>
-    <main id="main">
-      <div class="toolbar">
-        <div class="mt-title">기획회의</div>
-        <button class="info-btn" onclick="S.info=!S.info;render()">i</button>
-        <div class="period">2026. 7. 4 – 7. 10</div>
-        <div class="chip blue">6명 중 4명 완료</div>
-        <div class="tb-right"><button class="btn-cta solid" onclick="enterInput()">내 시간 입력하기</button>
-          <div class="seg">
-            <button class="" onclick="S.calMode=&#39;day&#39;;S.popup=null;S.ddOpen=false;render()">Day</button>
-            <button class="on" onclick="S.calMode=&#39;week&#39;;S.popup=null;S.ddOpen=false;render()">Week</button>
-          </div>
-          <div class="dd"><button style="display:flex;gap:8px;align-items:center" onclick="S.ddOpen=!S.ddOpen;render()">
-              캘린더 <span class="car">▾</span></button>
-
-          </div>
-        </div>
-      </div>
-      <div class="panel" style="position:relative">
-        <div class="day-head">
-          <div class="dcell">
-            <div class="dow">월</div>
-            <div class="dnum">4</div>
-          </div>
-          <div class="dcell">
-            <div class="dow">화</div>
-            <div class="dnum">5</div>
-          </div>
-          <div class="dcell">
-            <div class="dow">수</div>
-            <div class="dnum">6</div>
-          </div>
-          <div class="dcell">
-            <div class="dow">목</div>
-            <div class="dnum">7</div>
-          </div>
-          <div class="dcell">
-            <div class="dow">금</div>
-            <div class="dnum">8</div>
-          </div>
-          <div class="dcell">
-            <div class="dow">토</div>
-            <div class="dnum">9</div>
-          </div>
-          <div class="dcell">
-            <div class="dow">일</div>
-            <div class="dnum">10</div>
-          </div>
-        </div>
-        <div class="grid" style="height:calc(var(--hh)*8)">
-          <div class="gutter">
-            <div style="top:calc(var(--hh)*0)">09:00</div>
-            <div style="top:calc(var(--hh)*1)">10:00</div>
-            <div style="top:calc(var(--hh)*2)">11:00</div>
-            <div style="top:calc(var(--hh)*3)">12:00</div>
-            <div style="top:calc(var(--hh)*4)">13:00</div>
-            <div style="top:calc(var(--hh)*5)">14:00</div>
-            <div style="top:calc(var(--hh)*6)">15:00</div>
-            <div style="top:calc(var(--hh)*7)">16:00</div>
-            <div style="top:calc(var(--hh)*8)">17:00</div>
-          </div>
-          <div class="cols" id="cols">
-            <div class="hlines">
-              <div style="top:calc(var(--hh)*0)"></div>
-              <div style="top:calc(var(--hh)*1)"></div>
-              <div style="top:calc(var(--hh)*2)"></div>
-              <div style="top:calc(var(--hh)*3)"></div>
-              <div style="top:calc(var(--hh)*4)"></div>
-              <div style="top:calc(var(--hh)*5)"></div>
-              <div style="top:calc(var(--hh)*6)"></div>
-              <div style="top:calc(var(--hh)*7)"></div>
-              <div style="top:calc(var(--hh)*8)"></div>
-            </div>
-            <div class="col" data-c="0">
-              <div class="blk pos " style="top:calc(var(--hh)*0 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,0,9)">
-                <span class="best">Best</span>
-                <div class="lbl">선호 3 · 비선호 1</div>
-              </div>
-              <div class="blk  " style="top:calc(var(--hh)*6 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,0,15)">
-
-                <div class="lbl"></div>
-              </div>
-            </div>
-            <div class="col" data-c="1">
-              <div class="blk pos " style="top:calc(var(--hh)*1 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,1,10)">
-                <span class="best">Best</span>
-                <div class="lbl">선호 2</div>
-              </div>
-            </div>
-            <div class="col" data-c="2">
-              <div class="blk  " style="top:calc(var(--hh)*2 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,2,11)">
-
-                <div class="lbl"></div>
-              </div>
-              <div class="blk neg " style="top:calc(var(--hh)*3 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,2,12)">
-
-                <div class="lbl">비선호 3</div>
-              </div>
-              <div class="blk  " style="top:calc(var(--hh)*4 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,2,13)">
-
-                <div class="lbl"></div>
-              </div>
-              <div class="blk neg " style="top:calc(var(--hh)*5 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,2,14)">
-
-                <div class="lbl">비선호 2</div>
-              </div>
-            </div>
-            <div class="col" data-c="3">
-              <div class="blk  " style="top:calc(var(--hh)*0 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,3,9)">
-
-                <div class="lbl">선호 2 · 비선호 2</div>
-              </div>
-              <div class="blk  " style="top:calc(var(--hh)*4 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,3,13)">
-
-                <div class="lbl"></div>
-              </div>
-            </div>
-            <div class="col" data-c="4">
-              <div class="blk pos " style="top:calc(var(--hh)*1 + 4px); height:calc(var(--hh)*1 - 8px);"
-                onclick="openPopup(event,4,10)">
-                <span class="best">Best</span>
-                <div class="lbl">선호 3 · 비선호 1</div>
-              </div>
-            </div>
-            <div class="col" data-c="5"></div>
-            <div class="col" data-c="6"></div>
-          </div>
-        </div>
-      </div>
-    </main>
+    <main id="main"><div class="toolbar">
+  <div class="mt-title">기획회의</div>
+  <button class="info-btn" onclick="S.info=!S.info;render()">i</button>
+  <div class="period">2026. 7. 4 – 7. 10</div>
+  <div class="chip blue">6명 중 4명 완료</div>
+  <div class="tb-right"><button class="btn-cta solid" onclick="enterInput()">내 시간 입력하기</button>
+  <div class="seg">
+   <button class="" onclick="S.calMode=&#39;day&#39;;S.popup=null;S.ddOpen=false;render()">Day</button>
+   <button class="on" onclick="S.calMode=&#39;week&#39;;S.popup=null;S.ddOpen=false;render()">Week</button>
+  </div>
+  <div class="dd"><button style="display:flex;gap:8px;align-items:center" onclick="S.ddOpen=!S.ddOpen;render()">
+   캘린더 <span class="car">▾</span></button>
+   
+  </div></div>
+ </div>
+ <div class="panel" style="position:relative">
+  <div class="day-head"><div class="dcell"><div class="dow">월</div><div class="dnum">4</div></div><div class="dcell"><div class="dow">화</div><div class="dnum">5</div></div><div class="dcell"><div class="dow">수</div><div class="dnum">6</div></div><div class="dcell"><div class="dow">목</div><div class="dnum">7</div></div><div class="dcell"><div class="dow">금</div><div class="dnum">8</div></div><div class="dcell"><div class="dow">토</div><div class="dnum">9</div></div><div class="dcell"><div class="dow">일</div><div class="dnum">10</div></div></div>
+  <div class="grid" style="height:calc(var(--hh)*8)">
+   <div class="gutter"><div style="top:calc(var(--hh)*0)">09:00</div><div style="top:calc(var(--hh)*1)">10:00</div><div style="top:calc(var(--hh)*2)">11:00</div><div style="top:calc(var(--hh)*3)">12:00</div><div style="top:calc(var(--hh)*4)">13:00</div><div style="top:calc(var(--hh)*5)">14:00</div><div style="top:calc(var(--hh)*6)">15:00</div><div style="top:calc(var(--hh)*7)">16:00</div><div style="top:calc(var(--hh)*8)">17:00</div></div>
+   <div class="cols" id="cols">
+    <div class="hlines"><div style="top:calc(var(--hh)*0)"></div><div style="top:calc(var(--hh)*1)"></div><div style="top:calc(var(--hh)*2)"></div><div style="top:calc(var(--hh)*3)"></div><div style="top:calc(var(--hh)*4)"></div><div style="top:calc(var(--hh)*5)"></div><div style="top:calc(var(--hh)*6)"></div><div style="top:calc(var(--hh)*7)"></div><div style="top:calc(var(--hh)*8)"></div></div>
+    <div class="col" data-c="0"><div class="blk pos " style="top:calc(var(--hh)*0 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,0,9)">
+   <span class="best">Best</span>
+   <div class="lbl">선호 3 · 비선호 1</div></div><div class="blk  " style="top:calc(var(--hh)*6 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,0,15)">
+   
+   <div class="lbl"></div></div></div><div class="col" data-c="1"><div class="blk pos " style="top:calc(var(--hh)*1 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,1,10)">
+   <span class="best">Best</span>
+   <div class="lbl">선호 2</div></div></div><div class="col" data-c="2"><div class="blk  " style="top:calc(var(--hh)*2 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,2,11)">
+   
+   <div class="lbl"></div></div><div class="blk neg " style="top:calc(var(--hh)*3 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,2,12)">
+   
+   <div class="lbl">비선호 3</div></div><div class="blk  " style="top:calc(var(--hh)*4 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,2,13)">
+   
+   <div class="lbl"></div></div><div class="blk neg " style="top:calc(var(--hh)*5 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,2,14)">
+   
+   <div class="lbl">비선호 2</div></div></div><div class="col" data-c="3"><div class="blk  " style="top:calc(var(--hh)*0 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,3,9)">
+   
+   <div class="lbl">선호 2 · 비선호 2</div></div><div class="blk  " style="top:calc(var(--hh)*4 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,3,13)">
+   
+   <div class="lbl"></div></div></div><div class="col" data-c="4"><div class="blk pos " style="top:calc(var(--hh)*1 + 4px); height:calc(var(--hh)*1 - 8px);" onclick="openPopup(event,4,10)">
+   <span class="best">Best</span>
+   <div class="lbl">선호 3 · 비선호 1</div></div></div><div class="col" data-c="5"></div><div class="col" data-c="6"></div>
+   </div>
+  </div>
+ </div></main>
   </div>
 
   <div id="modal-root"></div>
@@ -2053,7 +2094,7 @@
       applyCfg();
       const sb = document.getElementById('sidebar');
       if (sb) sb.classList.toggle('closed', !!S.sidebarClosed);
-      document.getElementById('hd-avatar').textContent = S.role === 'guest' ? '최' : '이';
+      document.getElementById('hd-avatar').textContent = S.role === 'guest' ? ((persona() || {}).ini || '최') : '이';
       renderAttendees(); renderMeets();
       const m = document.getElementById('main');
       if (!meet()) m.innerHTML = tplNoMeet();
@@ -2608,7 +2649,41 @@
     /* ================= interactions ================= */
     function setRole(r) {
       S.role = r; S.view = 'calendar'; S.popup = null; S.pending = null; S.info = false;
-      document.getElementById('start').classList.add('hide'); render();
+      document.getElementById('start').classList.add('hide');
+      document.getElementById('invite').classList.add('hide');
+      render();
+    }
+    function showInvite() {
+      document.getElementById('start').classList.add('hide');
+      document.getElementById('invite').classList.remove('hide');
+      document.getElementById('inv-guest-sec').classList.add('hide');
+      document.getElementById('inv-login-sec').classList.remove('hide');
+      const el = document.getElementById('inv-email'); if (el) el.focus();
+    }
+    function showInviteGuest() {
+      document.getElementById('inv-login-sec').classList.add('hide');
+      document.getElementById('inv-guest-sec').classList.remove('hide');
+      const el = document.getElementById('inv-name'); if (el) el.focus();
+    }
+    function showInviteLogin() {
+      document.getElementById('inv-guest-sec').classList.add('hide');
+      document.getElementById('inv-login-sec').classList.remove('hide');
+      const el = document.getElementById('inv-email'); if (el) el.focus();
+    }
+    function guestJoin() {
+      // 데모: 이름·비밀번호 어떤 값이든 통과. 이름을 입력하면 참석자 이름으로 반영돼요.
+      const name = (document.getElementById('inv-name').value || '').trim();
+      if (name) {
+        const g = P.find(p => p.id === 'yj');
+        if (g) { g.name = name; g.ini = name[0]; }
+      }
+      setRole('guest');
+      toast(`'${name || '최유진'}' 님으로 참여해요`);
+    }
+    function inviteLogin() {
+      // 데모: 어떤 값이든(빈 값 포함) 로그인 통과 → 참석자(최유진) 세션 시작
+      setRole('guest');
+      toast('최유진 님으로 로그인했어요');
     }
     function toggleAtt(id) { S.checked[id] = !S.checked[id]; S.popup = null; render(); }
     function enterInput() {
@@ -2719,6 +2794,6 @@
 
 
 
-</body>
 
-</html>
+
+</body></html>
