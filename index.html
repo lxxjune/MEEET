@@ -1934,25 +1934,37 @@
       {
         id: 'jy', name: '이지윤', ini: '이', email: 'jiyoon@meeet.io', req: true, host: true, responded: true, marks: [
           { type: 'pref', c: 0, h: 9, span: 1, reason: '오전이 제일 집중이 잘 돼요' },
-          { type: 'pref', c: 4, h: 10, span: 1 }, { type: 'pref', c: 3, h: 9, span: 1 }]
+          { type: 'pref', c: 4, h: 10, span: 1, reason: '금요일 오전에 빠르게 논의하고 주 마무리하면 좋아요!' },
+          { type: 'pref', c: 3, h: 9, span: 1, reason: '조용한 아침 시간에 회의하기 좋아요' },
+          { type: 'avoid', c: 2, h: 12, span: 1, reason: '점심 직후라 졸려요 😴' }]
       },
       {
         id: 'hn', name: '박하늘', ini: '박', email: 'haneul@meeet.io', req: true, responded: true, marks: [
           ...blockAllExceptCanon,
           { type: 'pref', c: 0, h: 9, span: 1, reason: '이 시간이면 준비하고 참여할 수 있어요' },
-          { type: 'pref', c: 4, h: 10, span: 1 }, { type: 'pref', c: 3, h: 9, span: 1 }, { type: 'avoid', c: 2, h: 14, span: 1 }]
+          { type: 'pref', c: 4, h: 10, span: 1, reason: '이전 회의 직후라 이어서 진행하기 딱 좋아요' },
+          { type: 'pref', c: 3, h: 9, span: 1, reason: '오전 미팅 선호합니다' },
+          { type: 'avoid', c: 2, h: 14, span: 1, reason: '다른 팀 정기 미팅이랑 겹칠 수도 있어요. 그 미팅을 변경할 수도 있긴 해요.' },
+          { type: 'avoid', c: 1, h: 12, span: 1, reason: '점심 직후라 졸려요' }]
       },
       {
         id: 'dh', name: '이도현', ini: '이', email: 'dohyun@meeet.io', req: true, responded: true, marks: [
+          { type: 'pref', c: 1, h: 10, span: 1, reason: '화요일 오전이 가장 집중이 잘 돼요' },
           { type: 'avoid', c: 0, h: 9, span: 1, reason: '출근 직후라 조금 어려워요' },
-          { type: 'avoid', c: 4, h: 10, span: 1 }, { type: 'avoid', c: 2, h: 14, span: 1 }]
+          { type: 'avoid', c: 4, h: 10, span: 1, reason: '금요일 오전엔 코드 리뷰 일정이 있어요' },
+          { type: 'avoid', c: 2, h: 12, span: 1, reason: '점심 식사 직후 시간대라 졸려요' },
+          { type: 'avoid', c: 2, h: 14, span: 1, reason: '오후에는 개발 몰입 시간에 집중하고 싶어요' },
+          { type: 'avoid', c: 3, h: 9, span: 1, reason: '출근 직후라 조금 어려워요' }]
       },
       { id: 'ma', name: '정민아', ini: '정', email: 'mina@meeet.io', req: true, responded: false, marks: [] },
       { id: 'yj', name: '최유진', ini: '최', email: 'yujin@meeet.io', req: false, responded: false, marks: [] },
       {
         id: 'jw', name: '한지우', ini: '한', email: 'jiwoo@meeet.io', req: false, responded: true, marks: [
-          { type: 'pref', c: 0, h: 9, span: 1 }, { type: 'pref', c: 4, h: 10, span: 1 },
-          { type: 'pref', c: 1, h: 10, span: 1 }, { type: 'avoid', c: 2, h: 12, span: 1 }, { type: 'avoid', c: 3, h: 9, span: 1 }]
+          { type: 'pref', c: 0, h: 9, span: 1, reason: '한 주 시작 전에 맞추면 좋을 것 같아요' },
+          { type: 'pref', c: 4, h: 10, span: 1, reason: '주말 전 마지막 회의로 적당해요' },
+          { type: 'pref', c: 1, h: 10, span: 1, reason: '' },
+          { type: 'avoid', c: 2, h: 12, span: 1, reason: '점심 직후라 졸려요' },
+          { type: 'avoid', c: 3, h: 9, span: 1, reason: '목요일 오전에는 외부 고객사 미팅 가능성이 있어요. 빠져도 되긴 해요.' }]
       },
     ];
 
