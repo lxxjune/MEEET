@@ -2256,7 +2256,7 @@
     </div>
    </div>
   </div>
-  <div class="warn">! &nbsp;기간·시간대를 좁히면 범위를 벗어난 참석자 입력은 삭제돼요.</div>
+  <div class="warn">! &nbsp;기간과 시간대를 좁히면 범위를 벗어난 참석자 입력은 삭제돼요.</div>
   <hr class="msep">
   <div class="fld" style="margin-top:0">참석자 초대</div>
   <div class="inv-add">
@@ -2440,7 +2440,7 @@
    <div class="blk confirmed" style="${posStyle(s.h, s.dur || 1)}">
     <div class="t1">✓ 확정 &nbsp; ${esc(meet().title)}</div><div class="t3">${tt(s.h)} – ${tt(s.h + (s.dur || 1))}</div>
    </div>`: '',
-          s.c === c ? '' : `<div class="grid-hint"><b>이 날에는 확정된 회의가 없어요</b><span>화살표로 ${dayStr(s)}로 이동해보세요</span></div>`);
+          s.c === c ? '' : `<div class="grid-hint"><b>이 날에는 확정된 회의가 없어요</b><span>${dayStr(s)}을 확인해보세요</span></div>`);
       }
       const rc = respondedChecked();
       const cs = candidates().filter(s => s.c === c);
@@ -2448,7 +2448,7 @@
       if (!rc.length) {
         extra = `<div class="grid-hint"><b>아직 입력한 참석자가 없어요</b><span>'내 시간 입력하기'를 눌러 먼저 입력해보세요</span></div>`;
       } else if (!cs.length) {
-        extra = `<div class="grid-hint"><b>이 날에는 후보 시간이 없어요</b><span>화살표로 다른 날짜를 확인해보세요</span></div>`;
+        extra = `<div class="grid-hint"><b>이 날에는 후보 시간이 없어요</b><span>다른 날짜를 확인해보세요</span></div>`;
       }
       const html = dayShell(cs.map(s => {
         const cls = s.net > 0 ? 'pos' : s.net < 0 ? 'neg' : '';
