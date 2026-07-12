@@ -1644,7 +1644,7 @@
       font-size: 12px;
       resize: none;
       height: 60px;
-      margin-top: 6px;
+      margin-top: 4px;
       font-family: inherit;
     }
 
@@ -2844,7 +2844,7 @@
   <label><input type="radio" name="mt" value="block" ${p.type === 'block' ? 'checked' : ''} onchange="S.pending.type='block'"><span class="sw b"></span>불가능</label>
   <label><input type="radio" name="mt" value="pref" ${p.type === 'pref' ? 'checked' : ''} onchange="S.pending.type='pref'"><span class="sw p"></span>선호</label>
   <label><input type="radio" name="mt" value="avoid" ${p.type === 'avoid' ? 'checked' : ''} onchange="S.pending.type='avoid'"><span class="sw a"></span>비선호</label>
-  <div class="sec" style="margin-top:12px">사유 (선택)</div>
+  <div class="sec" style="margin-top:14px; margin-bottom:4px; margin-left:4px;">사유 (선택)</div>
   <textarea placeholder="이 시간이 좋은 이유를 알려주세요" oninput="S.pending.reason=this.value">${p.reason || ''}</textarea>
   <div class="foot">
    ${p.editIdx != null ? `<button class="del" onclick="deleteMark()">삭제</button>` : ''}
