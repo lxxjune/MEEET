@@ -131,6 +131,10 @@
       z-index: 10;
     }
 
+    aside.closed {
+      display: none;
+    }
+
     .side-label {
       display: flex;
       justify-content: space-between;
@@ -1717,7 +1721,7 @@
   </div>
 
   <header>
-    <button class="burger"><span></span><span></span><span></span></button>
+    <button class="burger" aria-label="사이드바 열기/닫기" onclick="S.sidebarClosed=!S.sidebarClosed;render()"><span></span><span></span><span></span></button>
     <div class="logo">MEEET!</div>
     <div class="hd-right">
       <button class="btn-primary" onclick="toast(&#39;데모 버전에서는 새 회의 생성이 지원되지 않아요&#39;)">+ 새 회의 만들기</button>
@@ -1726,7 +1730,7 @@
   </header>
 
   <div class="app">
-    <aside>
+    <aside id="sidebar">
       <div class="side-label">미팅 <span class="plus">＋</span></div>
       <div id="meet-list">
         <div class="meet-item on">
@@ -2043,6 +2047,8 @@
     /* ================= render ================= */
     function render() {
       applyCfg();
+      const sb = document.getElementById('sidebar');
+      if (sb) sb.classList.toggle('closed', !!S.sidebarClosed);
       document.getElementById('hd-avatar').textContent = S.role === 'guest' ? '최' : '이';
       renderAttendees(); renderMeets();
       const m = document.getElementById('main');
