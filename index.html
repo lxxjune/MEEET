@@ -1049,7 +1049,7 @@
 
     .nav-arrow {
       position: absolute;
-      top: 150px;
+      top: 24px;
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -2401,8 +2401,8 @@
     function dayShell(inner, extra = '') {
       const d = DAYS[S.dayIdx];
       return `<div class="panel" style="position:relative">
-  <div class="day-head" style="padding-left:76px; justify-content:flex-start">
-   <div class="dcell" style="flex:none; text-align:left"><div class="dow">${d[0]}</div><div class="dnum">${d[1]}</div></div>
+  <div class="day-head" style="justify-content:center">
+   <div class="dcell" style="flex:none; text-align:center"><div class="dow">${d[0]}</div><div class="dnum">${d[1]}</div></div>
   </div>
   <button class="nav-arrow ${S.dayIdx === D0 ? 'dim' : ''}" style="left:52px" onclick="stepDay(-1)">‹</button>
   <button class="nav-arrow ${S.dayIdx === D1 ? 'dim' : ''}" style="right:12px" onclick="stepDay(1)">›</button>
