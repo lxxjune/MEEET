@@ -393,10 +393,23 @@
 
     .modal .mclose {
       position: absolute;
-      right: 24px;
-      top: 26px;
+      right: 20px;
+      top: 20px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 18px;
       color: var(--sub);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .modal .mclose:hover {
+      background: rgba(0, 0, 0, .06);
+      color: var(--txt);
     }
 
     .modal .frow {
@@ -779,6 +792,12 @@
       justify-content: center;
       margin-left: -6px;
       margin-right: 8px;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .info-btn:hover {
+      border-color: var(--sub);
+      color: var(--sub);
     }
 
     .period {
@@ -846,11 +865,21 @@
     .btn-cta.solid {
       background: var(--p);
       color: #fff;
+      transition: background 0.15s;
+    }
+
+    .btn-cta.solid:hover {
+      background: #186BE0;
     }
 
     .btn-cta.soft {
       background: var(--soft);
       color: var(--p);
+      transition: background 0.15s;
+    }
+
+    .btn-cta.soft:hover {
+      background: #D8E6FD;
     }
 
     .seg {
@@ -883,6 +912,13 @@
       padding: 8px 16px;
       font-size: 14px;
       position: relative;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .dd:hover {
+      background: var(--panel);
+      border-color: var(--sub);
     }
 
     .dd .car {
@@ -1405,10 +1441,23 @@
 
     .pop .close {
       position: absolute;
-      right: 20px;
-      top: 18px;
+      right: 14px;
+      top: 14px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--faint);
       font-size: 16px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .pop .close:hover {
+      background: rgba(0, 0, 0, .06);
+      color: var(--txt);
     }
 
     .pop h4 {
@@ -1504,6 +1553,11 @@
       font-size: 14px;
       font-weight: 500;
       margin-top: 4px;
+      transition: background 0.15s;
+    }
+
+    .pop .confirm-btn:hover {
+      background: #186BE0;
     }
 
     .pop .edit-btn {
@@ -1515,6 +1569,11 @@
       font-size: 13px;
       font-weight: 500;
       margin-top: 6px;
+      transition: background 0.15s;
+    }
+
+    .pop .edit-btn:hover {
+      background: #D8E6FD;
     }
 
     .pop .meta {
@@ -1604,6 +1663,11 @@
       padding: 9px 22px;
       font-size: 13px;
       font-weight: 500;
+      transition: background 0.15s;
+    }
+
+    .mkpanel .save:hover {
+      background: #186BE0;
     }
 
     .submit-fab {
@@ -1618,6 +1682,11 @@
       font-weight: 500;
       box-shadow: 0 10px 26px rgba(33, 124, 249, .35);
       z-index: 45;
+      transition: background 0.15s;
+    }
+
+    .submit-fab:hover {
+      background: #186BE0;
     }
 
     /* ===== start overlay / toast ===== */
@@ -1743,6 +1812,11 @@
       font-size: 15px;
       font-weight: 500;
       margin-top: 8px;
+      transition: background 0.15s;
+    }
+
+    .inv-login:hover {
+      background: #186BE0;
     }
 
     .inv-guestlink {
@@ -1754,6 +1828,12 @@
       font-weight: 500;
       margin-top: 18px;
       padding: 6px;
+      transition: color 0.15s;
+    }
+
+    .inv-guestlink:hover {
+      color: #186BE0;
+      text-decoration: underline;
     }
 
     .inv-hint {
