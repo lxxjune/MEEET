@@ -2507,7 +2507,7 @@
       if (!rc.length) {
         extra = `<div class="grid-hint"><b>아직 입력한 참석자가 없어요</b><span>'내 시간 입력하기'를 눌러 먼저 입력해보세요</span></div>`;
       } else if (!cs.length) {
-        extra = `<div class="grid-hint"><b>이 날에는 후보 시간이 없어요</b><span>다른 날짜를 확인해보세요</span></div>`;
+        extra = `<div class="grid-hint"><b>이 날에는 가능한 시간이 없어요</b><span>다른 날짜를 확인해보세요</span></div>`;
       }
       const html = dayShell(cs.map(s => {
         const cls = s.net > 0 ? 'pos' : s.net < 0 ? 'neg' : '';
