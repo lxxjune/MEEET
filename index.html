@@ -120,6 +120,14 @@
       padding: 10px 20px;
       font-size: 14px;
       font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: #186BE0;
     }
 
     .avatar {
@@ -1928,7 +1936,7 @@
       onclick="S.sidebarClosed=!S.sidebarClosed;render()"><span></span><span></span><span></span></button>
     <div class="logo">MEEET!</div>
     <div class="hd-right">
-      <button class="btn-primary" onclick="clickNewMeet()">+ 새 회의 만들기</button>
+      <button class="btn-primary" onclick="clickNewMeet()"><span>+</span><span>새 회의 만들기</span></button>
       <div class="avatar" id="hd-avatar">이</div>
     </div>
   </header>
