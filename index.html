@@ -1975,10 +1975,6 @@
         <div class="period">2026. 7. 4 – 7. 10</div>
         <div class="chip blue">6명 중 4명 입력 완료</div>
         <div class="tb-right"><button class="btn-cta solid" onclick="enterInput()">내 시간 입력하기</button>
-          <div class="seg">
-            <button class="" onclick="S.calMode=&#39;day&#39;;S.popup=null;S.ddOpen=false;render()">Day</button>
-            <button class="on" onclick="S.calMode=&#39;week&#39;;S.popup=null;S.ddOpen=false;render()">Week</button>
-          </div>
           <div class="dd"><button style="display:flex;gap:8px;align-items:center" onclick="S.ddOpen=!S.ddOpen;render()">
               캘린더 <span class="car">▾</span></button>
 
@@ -2577,11 +2573,6 @@
             ? `<button class="btn-cta soft" onclick="enterInput()">내 시간 수정하기</button>`
             : `<button class="btn-cta solid" onclick="enterInput()">내 시간 입력하기</button>`;
       }
-      const seg = (S.view !== 'list' && S.view !== 'input') ? `
-  <div class="seg">
-   <button class="${S.calMode === 'day' ? 'on' : ''}" onclick="S.calMode='day';S.popup=null;S.ddOpen=false;render()">Day</button>
-   <button class="${S.calMode === 'week' ? 'on' : ''}" onclick="S.calMode='week';S.popup=null;S.ddOpen=false;render()">Week</button>
-  </div>`: '';
       const periodTxt = `2026. 7. ${DAYS[D0][1]} – 7. ${DAYS[D1][1]}`;
       const dd = S.view === 'input' ? '' : `
   <div class="dd"><button style="display:flex;gap:8px;align-items:center" onclick="S.ddOpen=!S.ddOpen;render()">
@@ -2595,7 +2586,7 @@
   <button class="info-btn" onclick="S.info=!S.info;render()">i</button>
   <div class="period">${periodTxt}</div>
   ${chips}
-  <div class="tb-right">${cta}${seg}${dd}</div>
+  <div class="tb-right">${cta}${dd}</div>
  </div>
  ${S.info ? tplInfoPop() : ''}`;
     }
@@ -2631,7 +2622,6 @@
 
     /* ---- calendar view ---- */
     function tplCalendar() {
-      if (S.calMode === 'day') return tplCalendarDay();
       if (S.confirmed) {
         const s = S.confirmed;
         return gridShell(c => c === s.c ? `
@@ -2654,51 +2644,6 @@
         const sel = S.popup && S.popup.c === s.c && S.popup.h === s.h ? 'selected' : '';
         return `<div class="blk ${cls} ${sel}" style="${posStyle(s.h, DUR)}" onclick="openPopup(event,${s.c},${s.h})">
    ${s.best ? '<span class="best">Best</span>' : ''}
-   ${DUR >= 1 ? `<div class="lbl">${lblStr(s)}</div>` : ''}</div>`;
-      }).join(''), extra);
-      return html + (S.popup ? tplDetail() : '');
-    }
-    function dayShell(inner, extra = '') {
-      const d = DAYS[S.dayIdx];
-      return `<div class="panel" style="position:relative">
-  <div class="day-head" style="justify-content:center">
-   <div class="dcell" style="flex:none; text-align:center"><div class="dow">${d[0]}</div><div class="dnum">${d[1]}</div></div>
-  </div>
-  <button class="nav-arrow ${S.dayIdx === D0 ? 'dim' : ''}" style="left:52px" onclick="stepDay(-1)">‹</button>
-  <button class="nav-arrow ${S.dayIdx === D1 ? 'dim' : ''}" style="right:12px" onclick="stepDay(1)">›</button>
-  <div class="grid" style="height:calc(var(--hh)*${NH})">
-   <div class="gutter">${Array.from({ length: NH + 1 }, (_, i) => `<div style="top:calc(var(--hh)*${i})">${tt(H0 + i)}</div>`).join('')}</div>
-   <div class="cols" id="cols">
-    <div class="hlines">${Array.from({ length: NH + 1 }, (_, i) => `<div style="top:calc(var(--hh)*${i})"></div>`).join('')}</div>
-    <div class="col" data-c="${S.dayIdx}">${inner}</div>
-   </div>
-  </div>${extra}
- </div>`;
-    }
-    function stepDay(d) { S.dayIdx = Math.max(D0, Math.min(D1, S.dayIdx + d)); S.popup = null; render(); }
-    function tplCalendarDay() {
-      const c = S.dayIdx;
-      if (S.confirmed) {
-        const s = S.confirmed;
-        return dayShell(s.c === c ? `
-   <div class="blk confirmed" style="${posStyle(s.h, s.dur || 1)}">
-    <div class="t1">✓ 확정 &nbsp; ${esc(meet().title)}</div><div class="t3">${tt(s.h)} – ${tt(s.h + (s.dur || 1))}</div>
-   </div>`: '',
-          s.c === c ? '' : `<div class="grid-hint"><b>이 날에는 확정된 회의가 없어요</b><span>${dayStr(s)}을 확인해보세요</span></div>`);
-      }
-      const rc = respondedChecked();
-      const cs = candidates().filter(s => s.c === c);
-      let extra = '';
-      if (!rc.length) {
-        extra = `<div class="grid-hint"><b>아직 입력한 참석자가 없어요</b><span>'내 시간 입력하기'를 눌러 먼저 입력해보세요</span></div>`;
-      } else if (!cs.length) {
-        extra = `<div class="grid-hint"><b>이 날에는 가능한 시간이 없어요</b><span>다른 날짜를 확인해보세요</span></div>`;
-      }
-      const html = dayShell(cs.map(s => {
-        const cls = s.net > 0 ? 'pos' : s.net < 0 ? 'neg' : '';
-        const sel = S.popup && S.popup.c === s.c && S.popup.h === s.h ? 'selected' : '';
-        return `<div class="blk day ${cls} ${sel}" style="${posStyle(s.h, DUR)}" onclick="openPopup(event,${s.c},${s.h})">
-   ${s.best ? '<span class="best">Best</span>' : ''}<span class="btime">${tt(s.h)} – ${tt(s.h + DUR)}</span>
    ${DUR >= 1 ? `<div class="lbl">${lblStr(s)}</div>` : ''}</div>`;
       }).join(''), extra);
       return html + (S.popup ? tplDetail() : '');
