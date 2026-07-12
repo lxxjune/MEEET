@@ -739,8 +739,8 @@
     }
 
     .mt-title {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 24px;
+      font-weight: 500;
     }
 
     .info-btn {
@@ -1876,7 +1876,7 @@
     <div class="inv-wrap">
       <div class="inv-card">
         <div class="inv-eyebrow">회의 초대</div>
-        <h1 class="inv-title">기획회의</h1>
+        <h1 class="inv-title">기획 회의</h1>
         <div class="inv-sub">이지윤 님이 회의에 초대했어요</div>
         <div class="inv-box">
           <div><span>기간</span><b>2026. 7. 4 – 7. 10</b></div>
@@ -1923,7 +1923,7 @@
       <div class="side-label">회의 <span class="plus" onclick="clickNewMeet()" title="새 회의 만들기">＋</span></div>
       <div id="meet-list">
         <div class="meet-item on">
-          <button class="meet-main" onclick="selectMeet(&#39;plan&#39;)"><span class="dot"></span>기획회의</button>
+          <button class="meet-main" onclick="selectMeet(&#39;plan&#39;)"><span class="dot"></span>기획 회의</button>
 
         </div>
         <div class="meet-item ">
@@ -1974,7 +1974,7 @@
     </aside>
     <main id="main">
       <div class="toolbar">
-        <div class="mt-title">기획회의</div>
+        <div class="mt-title">기획 회의</div>
         <button class="info-btn" onclick="S.info=!S.info;render()">i</button>
         <div class="period">2026. 7. 4 – 7. 10</div>
         <div class="chip blue">6명 중 4명 입력 완료</div>
@@ -2166,7 +2166,7 @@
 
     const MEETS = [
       {
-        id: 'plan', title: '기획회의', desc: '7월 스프린트 기획 및 일정 조율 회의입니다. 각자 가능한 시간을 입력해주세요.',
+        id: 'plan', title: '기획 회의', desc: '7월 스프린트 기획 및 일정 조율 회의입니다. 각자 가능한 시간을 입력해주세요.',
         durH: 1, h0: 9, h1: 17, d0: 0, d1: 6, cap: 6
       },
       { id: 'qa', title: 'QA 회의', desc: 'QA 일정 조율 회의입니다.', durH: 1, h0: 9, h1: 17, d0: 0, d1: 6, cap: 6, demo: true },
@@ -2179,7 +2179,7 @@
       drag: null, pending: null,
       activeMeet: 'plan', meetMenu: null, editMeet: null, delMeet: null, newMeet: false,
     };
-    MEETS[0].people = P.slice(); // 회의별 참석자 (기획회의 = 시드 데이터)
+    MEETS[0].people = P.slice(); // 회의별 참석자 (기획 회의 = 시드 데이터)
     const persona = () => S.role === 'host' ? P.find(p => p.id === 'jy') : P.find(p => p.id === 'yj');
     const meet = () => MEETS.find(m => m.id === S.activeMeet) || null;
     const esc = s => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
@@ -2268,7 +2268,7 @@
     /* ---- meeting menu / edit / delete ---- */
     function selectMeet(id) {
       const m = MEETS.find(x => x.id === id);
-      if (m.demo) { toast('데모에서는 기획회의만 볼 수 있어요'); return; }
+      if (m.demo) { toast('데모에서는 기획 회의만 볼 수 있어요'); return; }
       if (S.activeMeet === id) return;
       const cur = meet(); if (cur) cur.confirmed = S.confirmed; // 현재 회의 상태 보관
       S.activeMeet = id;
