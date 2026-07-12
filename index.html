@@ -152,6 +152,12 @@
     .side-label .plus {
       font-size: 18px;
       color: var(--sub);
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .side-label .plus:hover {
+      color: var(--txt);
     }
 
     .meet-item {
@@ -1903,7 +1909,7 @@
 
   <div class="app">
     <aside id="sidebar">
-      <div class="side-label">미팅 <span class="plus">＋</span></div>
+      <div class="side-label">미팅 <span class="plus" onclick="clickNewMeet()" title="새 회의 만들기">＋</span></div>
       <div id="meet-list">
         <div class="meet-item on">
           <button class="meet-main" onclick="selectMeet(&#39;plan&#39;)"><span class="dot"></span>기획회의</button>
@@ -1914,7 +1920,7 @@
 
         </div>
       </div>
-      <div class="side-label" style="margin-top:20px">참석자 <span class="plus">＋</span></div>
+      <div class="side-label" style="margin-top:20px">참석자 <span class="plus" id="att-plus-btn" onclick="openEditMeet(S.activeMeet)" title="회의 정보 수정">＋</span></div>
       <div id="att-list">
         <div class="att-row ">
           <input type="checkbox" checked="" onchange="toggleAtt(&#39;jy&#39;)">
@@ -2536,6 +2542,8 @@
  </div>`;
     }
     function renderAttendees() {
+      const attPlus = document.getElementById('att-plus-btn');
+      if (attPlus) attPlus.style.display = S.role === 'host' ? '' : 'none';
       document.getElementById('att-list').innerHTML = P.map(p => `
   <div class="att-row ${p.responded ? '' : 'norsp'}">
    <input type="checkbox" ${S.checked[p.id] ? 'checked' : ''} ${S.confirmed ? 'disabled' : ''} onchange="toggleAtt('${p.id}')">
