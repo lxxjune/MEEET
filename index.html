@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///Users/jiyoonlee/Downloads/index_1.html -->
+<!-- saved from url=(0046)file:///Users/jiyoonlee/Downloads/index_2.html -->
 <html lang="ko">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+
   <meta name="viewport" content="width=1280">
   <title>MEEET! – 회의 시간 조율 프로토타입</title>
-  <link rel="stylesheet" href="./MEEET! – 회의 시간 조율 프로토타입_files/pretendard.min.css">
+  <link rel="stylesheet"
+    href="file:///Users/jiyoonlee/Downloads/MEEET!%20%E2%80%93%20%E1%84%92%E1%85%AC%E1%84%8B%E1%85%B4%20%E1%84%89%E1%85%B5%E1%84%80%E1%85%A1%E1%86%AB%20%E1%84%8C%E1%85%A9%E1%84%8B%E1%85%B2%E1%86%AF%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%90%E1%85%A9%E1%84%90%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%B8_files/pretendard.min.css">
   <style>
     :root {
       --p: #217CF9;
@@ -1724,7 +1726,7 @@
       onclick="S.sidebarClosed=!S.sidebarClosed;render()"><span></span><span></span><span></span></button>
     <div class="logo">MEEET!</div>
     <div class="hd-right">
-      <button class="btn-primary" onclick="toast(&#39;데모 버전에서는 새 회의 생성이 지원되지 않아요&#39;)">+ 새 회의 만들기</button>
+      <button class="btn-primary" onclick="clickNewMeet()">+ 새 회의 만들기</button>
       <div class="avatar" id="hd-avatar">이</div>
     </div>
   </header>
@@ -1762,7 +1764,7 @@
           <div class="nm">이도현</div>
           <div class="badge req">필수</div>
         </div>
-        <div class="att-row ">
+        <div class="att-row norsp">
           <input type="checkbox" checked="" onchange="toggleAtt(&#39;ma&#39;)">
           <div class="avt">정</div>
           <div class="nm">정민아</div>
@@ -1774,7 +1776,7 @@
           <div class="nm">최유진</div>
           <div class="badge ">선택</div>
         </div>
-        <div class="att-row norsp">
+        <div class="att-row ">
           <input type="checkbox" checked="" onchange="toggleAtt(&#39;jw&#39;)">
           <div class="avt">한</div>
           <div class="nm">한지우</div>
@@ -1787,7 +1789,7 @@
         <div class="mt-title">기획회의</div>
         <button class="info-btn" onclick="S.info=!S.info;render()">i</button>
         <div class="period">2026. 7. 4 – 7. 10</div>
-        <div class="chip blue">6명 중 4명 입력 완료</div>
+        <div class="chip blue">6명 중 4명 완료</div>
         <div class="tb-right"><button class="btn-cta solid" onclick="enterInput()">내 시간 입력하기</button>
           <div class="seg">
             <button class="" onclick="S.calMode=&#39;day&#39;;S.popup=null;S.ddOpen=false;render()">Day</button>
@@ -1869,8 +1871,8 @@
             <div class="col" data-c="1">
               <div class="blk pos " style="top:calc(var(--hh)*1 + 4px); height:calc(var(--hh)*1 - 8px);"
                 onclick="openPopup(event,1,10)">
-
-                <div class="lbl">선호 1</div>
+                <span class="best">Best</span>
+                <div class="lbl">선호 2</div>
               </div>
             </div>
             <div class="col" data-c="2">
@@ -1882,7 +1884,7 @@
               <div class="blk neg " style="top:calc(var(--hh)*3 + 4px); height:calc(var(--hh)*1 - 8px);"
                 onclick="openPopup(event,2,12)">
 
-                <div class="lbl">비선호 1</div>
+                <div class="lbl">비선호 3</div>
               </div>
               <div class="blk  " style="top:calc(var(--hh)*4 + 4px); height:calc(var(--hh)*1 - 8px);"
                 onclick="openPopup(event,2,13)">
@@ -1896,10 +1898,10 @@
               </div>
             </div>
             <div class="col" data-c="3">
-              <div class="blk pos " style="top:calc(var(--hh)*0 + 4px); height:calc(var(--hh)*1 - 8px);"
+              <div class="blk  " style="top:calc(var(--hh)*0 + 4px); height:calc(var(--hh)*1 - 8px);"
                 onclick="openPopup(event,3,9)">
 
-                <div class="lbl">선호 2 · 비선호 1</div>
+                <div class="lbl">선호 2 · 비선호 2</div>
               </div>
               <div class="blk  " style="top:calc(var(--hh)*4 + 4px); height:calc(var(--hh)*1 - 8px);"
                 onclick="openPopup(event,3,13)">
@@ -1991,8 +1993,9 @@
       checked: Object.fromEntries(P.map(p => [p.id, true])),
       popup: null, info: false, ddOpen: false,
       drag: null, pending: null,
-      activeMeet: 'plan', meetMenu: null, editMeet: null, delMeet: null,
+      activeMeet: 'plan', meetMenu: null, editMeet: null, delMeet: null, newMeet: false,
     };
+    MEETS[0].people = P.slice(); // 회의별 참석자 (기획회의 = 시드 데이터)
     const persona = () => S.role === 'host' ? P.find(p => p.id === 'jy') : P.find(p => p.id === 'yj');
     const meet = () => MEETS.find(m => m.id === S.activeMeet) || null;
     const esc = s => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
@@ -2056,7 +2059,7 @@
       else if (S.view === 'input') m.innerHTML = tplToolbar() + tplInput();
       else if (S.view === 'list') m.innerHTML = tplToolbar() + tplList();
       else m.innerHTML = tplToolbar() + tplCalendar();
-      document.getElementById('modal-root').innerHTML = (S.editMeet ? tplEditMeet() : '') + (S.delMeet ? tplDelMeet() : '');
+      document.getElementById('modal-root').innerHTML = ((S.editMeet || S.newMeet) ? tplEditMeet() : '') + (S.delMeet ? tplDelMeet() : '');
       bindGrid();
     }
     function renderMeets() {
@@ -2083,12 +2086,57 @@
       const m = MEETS.find(x => x.id === id);
       if (m.demo) { toast('데모에서는 기획회의만 볼 수 있어요'); return; }
       if (S.activeMeet === id) return;
-      S.activeMeet = id; S.popup = null; S.pending = null; S.info = false; S.meetMenu = null; render();
+      const cur = meet(); if (cur) cur.confirmed = S.confirmed; // 현재 회의 상태 보관
+      S.activeMeet = id;
+      P.length = 0; P.push(...(m.people || []));
+      S.checked = Object.fromEntries(P.map(p => [p.id, true]));
+      S.confirmed = m.confirmed || null;
+      S.popup = null; S.pending = null; S.info = false; S.meetMenu = null;
+      S.view = 'calendar'; S.calMode = 'week';
+      render();
     }
     function openMeetMenu(e, id) {
       e.stopPropagation();
       S.meetMenu = S.meetMenu === id ? null : id; S.info = false; S.ddOpen = false; render();
     }
+    function clickNewMeet() {
+      if (S.role !== 'host') { toast('데모에서는 주최자만 회의를 만들 수 있어요'); return; }
+      openNewMeet();
+    }
+    function openNewMeet() {
+      S.meetMenu = null; S.info = false; S.editMeet = null; S.newMeet = true;
+      S.draft = {
+        title: '', desc: '', durH: 1, h0: 9, h1: 17, d0: 0, d1: 6,
+        cap: 2, pk: false, pkStart: null, inv: []
+      };
+      render();
+      const el = document.getElementById('em-title'); if (el) el.focus();
+    }
+    let meetSeq = 1;
+    function createMeet() {
+      syncDraft();
+      const dr = S.draft;
+      if (!dr.title.trim()) { toast('회의 제목을 입력해주세요'); return; }
+      if (dr.h1 - dr.h0 < dr.durH) { toast('시간 범위가 회의 시간보다 짧아요'); return; }
+      const id = 'm' + (meetSeq++);
+      const people = [
+        { id: 'jy', name: '이지윤', ini: '이', email: 'jiyoon@meeet.io', req: true, host: true, responded: false, marks: [] },
+        ...dr.inv.map(v => ({ id: v.id, name: v.name, ini: v.ini, email: v.email, req: v.req, responded: false, marks: [] }))
+      ];
+      MEETS.push({
+        id, title: dr.title.trim(), desc: dr.desc.trim(),
+        durH: dr.durH, h0: dr.h0, h1: dr.h1, d0: dr.d0, d1: dr.d1,
+        cap: Math.max(dr.cap, people.length), people
+      });
+      const cur = meet(); if (cur) cur.confirmed = S.confirmed;
+      S.activeMeet = id;
+      P.length = 0; P.push(...people);
+      S.checked = Object.fromEntries(P.map(p => [p.id, true]));
+      S.confirmed = null;
+      S.newMeet = false; S.draft = null; S.popup = null; S.view = 'calendar'; S.calMode = 'week';
+      render(); toast(`'${MEETS[MEETS.length - 1].title}' 회의가 만들어졌어요`);
+    }
+    function closeMeetForm() { S.editMeet = null; S.newMeet = false; S.draft = null; render(); }
     function openEditMeet(id) {
       const m = MEETS.find(x => x.id === id);
       S.meetMenu = null; S.info = false; S.editMeet = id;
@@ -2106,7 +2154,7 @@
     }
     function rerenderModal() {
       syncDraft();
-      document.getElementById('modal-root').innerHTML = (S.editMeet ? tplEditMeet() : '') + (S.delMeet ? tplDelMeet() : '');
+      document.getElementById('modal-root').innerHTML = ((S.editMeet || S.newMeet) ? tplEditMeet() : '') + (S.delMeet ? tplDelMeet() : '');
     }
     let nvSeq = 1;
     function addInvite() {
@@ -2121,7 +2169,7 @@
     }
     function removeInvite(i) {
       const v = S.draft.inv[i];
-      if (v.id === 'yj' && S.role === 'guest') { toast('본인은 초대 목록에서 삭제할 수 없어요'); return; }
+      if (!S.newMeet && v.id === 'yj' && S.role === 'guest') { toast('본인은 초대 목록에서 삭제할 수 없어요'); return; }
       S.draft.inv.splice(i, 1); rerenderModal();
     }
     function setReq(i, req) { S.draft.inv[i].req = req; rerenderModal(); }
@@ -2163,7 +2211,7 @@
  </div>`;
     }
     function stepCap(d) {
-      const dr = S.draft, min = dr.inv.length + 1;
+      const dr = S.draft, min = Math.max(2, dr.inv.length + 1);
       const next = Math.max(min, Math.min(20, dr.cap + d));
       if (next === dr.cap) {
         toast(d < 0 ? '초대된 참석자보다 적게 설정할 수 없어요' : '최대 20명까지 설정할 수 있어요');
@@ -2217,13 +2265,14 @@
     }
     function tplEditMeet() {
       const dr = S.draft; if (!dr) return '';
+      const isNew = S.newMeet;
       const sel = (a, b) => a === b ? 'selected' : '';
-      return `<div class="modal-dim" onclick="S.editMeet=null;S.draft=null;render()"></div>
+      return `<div class="modal-dim" onclick="closeMeetForm()"></div>
  <div class="modal wide">
-  <button class="mclose" onclick="S.editMeet=null;S.draft=null;render()">×</button>
-  <h3>회의 정보 수정</h3>
+  <button class="mclose" onclick="closeMeetForm()">×</button>
+  <h3>${isNew ? '새 회의 만들기' : '회의 정보 수정'}</h3>
   <label class="fld">회의 제목
-   <input id="em-title" type="text" value="${esc(dr.title)}" maxlength="30">
+   <input id="em-title" type="text" value="${esc(dr.title)}" maxlength="30" placeholder="회의 제목을 입력해주세요">
   </label>
   <label class="fld">회의 내용
    <textarea id="em-desc" placeholder="회의에 대한 설명을 입력해주세요">${esc(dr.desc)}</textarea>
@@ -2262,7 +2311,7 @@
     </div>
    </div>
   </div>
-  <div class="warn">! &nbsp;기간과 시간대를 좁히면 범위를 벗어난 참석자 입력은 삭제돼요.</div>
+  ${isNew ? '' : `<div class="warn">! &nbsp;기간과 시간대를 좁히면 범위를 벗어난 참석자 입력은 삭제돼요.</div>`}
   <hr class="msep">
   <div class="fld" style="margin-top:0">참석자 초대</div>
   <div class="inv-add">
@@ -2284,11 +2333,12 @@
   <div class="modal-foot spread">
    <div style="display:flex;gap:16px;align-items:center">
     <button class="linkbtn" onclick="copyLink()">링크 복사</button>
-    <button class="dngr" onclick="askDeleteMeet('${S.editMeet}')">삭제하기</button>
+    ${isNew ? '' : `<button class="dngr" onclick="askDeleteMeet('${S.editMeet}')">삭제하기</button>`}
    </div>
    <div style="display:flex;gap:8px">
-    <button class="ghost" onclick="S.editMeet=null;S.draft=null;render()">취소</button>
-    <button class="primary" onclick="saveMeet()">저장하기</button>
+    ${isNew ? `<button class="primary" style="padding:10px 26px" onclick="createMeet()">회의 만들기</button>`
+          : `<button class="ghost" onclick="closeMeetForm()">취소</button>
+    <button class="primary" onclick="saveMeet()">저장하기</button>`}
    </div>
   </div>
  </div>`;
@@ -2300,7 +2350,7 @@
       const wasActive = S.delMeet === S.activeMeet;
       if (S.editMeet === S.delMeet) { S.editMeet = null; S.draft = null; }
       MEETS.splice(i, 1);
-      if (wasActive) { S.activeMeet = null; S.view = 'calendar'; S.popup = null; S.pending = null; S.info = false; S.ddOpen = false; }
+      if (wasActive) { S.activeMeet = null; P.length = 0; S.confirmed = null; S.view = 'calendar'; S.popup = null; S.pending = null; S.info = false; S.ddOpen = false; }
       S.delMeet = null; render(); toast(`'${title}' 회의가 삭제됐어요`);
     }
     function tplDelMeet() {
@@ -2334,7 +2384,7 @@
    ${S.role === 'host' ? `<button class="cancel-link" onclick="S.confirmed=null;render()">확정 취소</button>` : ''}`;
       } else {
         chips = `<div class="chip blue">${P.length}명 중 ${done}명 완료</div>`;
-        if (S.view !== 'input')
+        if (S.view !== 'input' && me)
           cta = me.responded
             ? `<button class="btn-cta soft" onclick="enterInput()">내 시간 수정하기</button>`
             : `<button class="btn-cta solid" onclick="enterInput()">내 시간 입력하기</button>`;
@@ -2556,7 +2606,10 @@
       document.getElementById('start').classList.add('hide'); render();
     }
     function toggleAtt(id) { S.checked[id] = !S.checked[id]; S.popup = null; render(); }
-    function enterInput() { S.view = 'input'; S.popup = null; S.info = false; S.ddOpen = false; render(); }
+    function enterInput() {
+      if (!persona()) { toast('이 회의의 참석자가 아니에요'); return; }
+      S.view = 'input'; S.popup = null; S.info = false; S.ddOpen = false; render();
+    }
     function submitInput() {
       const me = persona();
       if (S.pending) { toast('열려 있는 입력을 먼저 저장해주세요'); return; }
@@ -2648,6 +2701,8 @@
     }
     render();
   </script>
+
+
 
 
 </body>
